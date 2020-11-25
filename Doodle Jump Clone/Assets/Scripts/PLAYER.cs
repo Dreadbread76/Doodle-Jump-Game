@@ -62,9 +62,17 @@ public class PLAYER : MonoBehaviour
         {
             rigi.AddForce(playerTrans.right * speed);
         }
+        if(position.y > 4)
+        {
+            isJumping = true;
+        }
         #endregion
         #region Scoring
-        int score = (int)position.y;
+
+
+        if((int)position.y > score)
+
+        score = (int)position.y;
         scoreText.text = "" + score;
         #endregion
     }

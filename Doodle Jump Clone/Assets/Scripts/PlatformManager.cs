@@ -16,9 +16,11 @@ public class PlatformManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+   public void NewPlatform()
     {
-        
+        GameObject newObj = Instantiate(gameObject);
+        platforms.Add(newObj.GetComponent<Platform>());
     }
+    
+
 }
