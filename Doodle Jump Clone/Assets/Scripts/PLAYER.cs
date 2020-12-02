@@ -23,6 +23,9 @@ public class PLAYER : MonoBehaviour
 
     int score;
 
+    public GameObject scoreMenu;
+    
+
     public Text scoreText;
 
     private float lavaOffset;
@@ -120,6 +123,7 @@ public class PLAYER : MonoBehaviour
     void Death()
     {
         gameObject.SetActive(false);
+
     }
     IEnumerator LavaMove(Vector3 newPos)
     {
