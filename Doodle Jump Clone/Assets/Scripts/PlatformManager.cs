@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class PlatformManager : MonoBehaviour
 {
-    private PLAYER player;
+    public GameObject player;
     private List<Platform> platforms = new List<Platform>();
+    public GameObject platformObj;
+    Vector3 spawnPos;
 
-    // Start is called before the first frame update
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
     public void MovePlatformsDown()
     {
         foreach(Platform platform in platforms)
@@ -16,11 +21,14 @@ public class PlatformManager : MonoBehaviour
         }
     }
 
-   public void NewPlatform()
+    public void NewPlatform()
     {
-        GameObject newObj = Instantiate(gameObject);
+
+        spawnPos = new Vector3(Random.Range(-7, 7) + player.transform.position.x, 4 + player.transform.position.y, 0);
+        GameObject newObj = Instantiate(platformObj, spawnPos, Quaternion.identity);
         platforms.Add(newObj.GetComponent<Platform>());
     }
+
     
 
 }

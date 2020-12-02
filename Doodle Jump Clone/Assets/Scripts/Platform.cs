@@ -5,14 +5,14 @@ using UnityEngine;
 public class Platform : MonoBehaviour
 {
 
-    private PLAYER player;
+    public PLAYER playerScript;
     private GameObject playerEntity;
 
    
     private void Start()
     {
         playerEntity = GameObject.FindGameObjectWithTag("Player");
-        
+        playerScript = playerEntity.GetComponent<PLAYER>();
     }
 
     private void Update()
@@ -25,6 +25,7 @@ public class Platform : MonoBehaviour
         {
             GetComponent<BoxCollider2D>().enabled = false;
         }
+        
     }
 
 
@@ -38,10 +39,12 @@ public class Platform : MonoBehaviour
     // Update is called once per frame
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (PLAYER.isJumping && player.platform != this)
+        if (PLAYER.isJumping && playerScript.platform != this)
         {
             PlatformManager manager = FindObjectOfType<PlatformManager>();
             manager.MovePlatformsDown();
+            playerScript.MoveLava();
         }
+        
     }
 }
