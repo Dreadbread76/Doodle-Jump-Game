@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PLAYER : MonoBehaviour
 {
     #region Variables
     Rigidbody2D rigi;
     public Transform playerTrans;
-
+    public PlayerData data;
     public static bool isJumping;
 
     public GameObject platform;
@@ -19,16 +20,18 @@ public class PLAYER : MonoBehaviour
     public float boundary;
     public float teleportPos;
 
-    public GameObject lava;
-
-    int score;
-
-    public GameObject scoreMenu;
     
-
+    [Header("Scoring")]
+    public static int score;
+    public GameObject scoreMenu;
     public Text scoreText;
+    public Text[] highscores = new Text[7];
 
+
+    [Header("Lava")]
+    public GameObject lava;
     private float lavaOffset;
+    
 
     #endregion
     #region Start
@@ -37,7 +40,7 @@ public class PLAYER : MonoBehaviour
 
         rigi = GetComponent<Rigidbody2D>();
         playerTrans = GetComponent<Transform>();
-
+        scoreMenu.SetActive(false);
 
         lavaOffset = transform.position.y - lava.transform.position.y;
     }
@@ -96,7 +99,15 @@ public class PLAYER : MonoBehaviour
         //    //  no longer move the lava (parenting not required)
         //}
     }
-
+    public void GetHighscores()
+    {
+        for (int i = 0; i < highscores.Length; i++)
+        {
+            highscores[i].text = data.savedScores[i].ToString();
+        }
+    }
+    #endregion
+    #region Lava
     public void MoveLava()
     {
         // Calculate the amount to move down, based on the current position and the offset
@@ -109,7 +120,7 @@ public class PLAYER : MonoBehaviour
 
         StartCoroutine(LavaMove(lavaPos));
     }
-    #endregion
+    
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -119,12 +130,6 @@ public class PLAYER : MonoBehaviour
             Death();
         }
     }
-
-    void Death()
-    {
-        gameObject.SetActive(false);
-
-    }
     IEnumerator LavaMove(Vector3 newPos)
     {
         Vector3 currentPos = lava.transform.position;
@@ -132,7 +137,7 @@ public class PLAYER : MonoBehaviour
         float maxTime = 1;
 
         // Loop until the timer has run out
-        while(timer < maxTime)
+        while (timer < maxTime)
         {
             // Calculate the amount to move along the lerp, based on the current time, divided by the maxtime
             // giving us a number from 0-1
@@ -147,5 +152,24 @@ public class PLAYER : MonoBehaviour
 
         lava.transform.position = newPos;
     }
-    
+    #endregion
+    #region Death and Revive
+    void Death()
+    {
+        SaveAndLoad.SaveScore();
+        GetHighscores();
+        //Set timescale to zero and bring up highscores
+        Time.timeScale = 0;
+        
+        scoreMenu.SetActive(true);
+    }
+    public void Revive()
+    {
+        //Set timescale to 1 and reload scene
+        Time.timeScale = 1;
+        SceneManager.LoadScene(1);
+    }
+    #endregion
+    #region Save and Load
+    #endregion
 }
