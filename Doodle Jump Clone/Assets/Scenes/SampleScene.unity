@@ -369,6 +369,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pausePanel: {fileID: 1384106114}
+  player: {fileID: 328043138}
+  playerScript: {fileID: 0}
 --- !u!114 &131119332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -767,6 +769,7 @@ MonoBehaviour:
   speed: 5
   boundary: 9
   teleportPos: -8.9
+  dead: 0
   scoreMenu: {fileID: 129034423}
   scoreText: {fileID: 784544527}
   highscoresText:

@@ -18,6 +18,7 @@ public class PLAYER : MonoBehaviour
     public float speed;
     public float boundary;
     public float teleportPos;
+    public bool dead;
 
     
     [Header("Scoring")]
@@ -43,6 +44,7 @@ public class PLAYER : MonoBehaviour
 
         lavaOffset = transform.position.y - lava.transform.position.y;
         SaveAndLoad.LoadScore();
+        dead = false;
     }
     #endregion
     #region Update 
@@ -174,16 +176,20 @@ public class PLAYER : MonoBehaviour
     void Death()
     {
         //Get the Highscores
+        dead = true;
         SaveAndLoad.SaveScore();
         GetHighscores();
         //Set timescale to zero and bring up highscores
         Time.timeScale = 0;
-        
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         scoreMenu.SetActive(true);
     }
     public void Revive()
     {
+
         //Set timescale to 1 and reload scene
+        dead = false;
         Time.timeScale = 1;
         SceneManager.LoadScene(1);
     }

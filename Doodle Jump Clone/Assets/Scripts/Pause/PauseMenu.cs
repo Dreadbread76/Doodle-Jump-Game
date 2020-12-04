@@ -10,8 +10,8 @@ public class PauseMenu : MonoBehaviour
     #region Variables
     public static bool isPaused;
     public GameObject pausePanel;
-   
-    
+    public GameObject player;
+    public PLAYER playerScript;
 
 
     
@@ -25,7 +25,7 @@ public class PauseMenu : MonoBehaviour
         Cursor.visible = false;
         isPaused = false;
         pausePanel.SetActive(false);
-       
+        playerScript = player.GetComponent<PLAYER>();
 
 
     }
@@ -33,9 +33,12 @@ public class PauseMenu : MonoBehaviour
     #region Update
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (playerScript.dead == false)
         {
-            PauseMenuActive();
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                PauseMenuActive();
+            }
         }
     }
     #endregion
