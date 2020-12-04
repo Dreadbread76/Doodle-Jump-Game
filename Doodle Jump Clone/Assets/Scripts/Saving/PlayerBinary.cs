@@ -41,7 +41,7 @@ public static class PlayerBinary
         }
         else
         {
-            Debug.LogError("Save not found in " + path);
+            Debug.LogWarning("Save not found in " + path);
             return null;
         }
     }

@@ -4,19 +4,35 @@ using UnityEngine;
 
 public class SaveAndLoad : MonoBehaviour
 {
-    public static PLAYER player;
+    private static PLAYER player;
     public static void SaveScore()
     {
- 
-        PlayerBinary.SavePlayer(player);
+        if (player == null)
+        {
+            player = FindObjectOfType<PLAYER>();
+        }
+
+        if (player != null)
+        {
+            PlayerBinary.SavePlayer(player);
+        }
     }
     public static void LoadScore()
     {
         PlayerData data = PlayerBinary.LoadPlayer();
 
-        if (data == null)
+        if(player == null)
         {
-            return;
+            player = FindObjectOfType<PLAYER>();
+        }
+
+        if (player!= null && data != null)
+        {
+            player.data = data;
+        }
+        else
+        {
+            player.data = new PlayerData(player);
         }
         
         

@@ -7,15 +7,14 @@ using UnityEngine.SceneManagement;
 public class PLAYER : MonoBehaviour
 {
     #region Variables
+    [Header("Player Stuff")]
     Rigidbody2D rigi;
     public Transform playerTrans;
     public PlayerData data;
     public static bool isJumping;
-
+    public Animator anim;
     public GameObject platform;
-
     public static Vector2 position = new Vector2();
-
     public float speed;
     public float boundary;
     public float teleportPos;
@@ -25,7 +24,7 @@ public class PLAYER : MonoBehaviour
     public static int score;
     public GameObject scoreMenu;
     public Text scoreText;
-    public Text[] highscores = new Text[7];
+    public Text[] highscoresText = new Text[7];
 
 
     [Header("Lava")]
@@ -43,6 +42,7 @@ public class PLAYER : MonoBehaviour
         scoreMenu.SetActive(false);
 
         lavaOffset = transform.position.y - lava.transform.position.y;
+        SaveAndLoad.LoadScore();
     }
     #endregion
     #region Update 
@@ -101,9 +101,15 @@ public class PLAYER : MonoBehaviour
     }
     public void GetHighscores()
     {
-        for (int i = 0; i < highscores.Length; i++)
+        
+        for (int i = 0; i < highscoresText.Length; i++)
         {
-            highscores[i].text = data.savedScores[i].ToString();
+           
+            if(i >= data.savedScores.Length)
+            {
+                break;
+            }
+            highscoresText[i].text = data.savedScores[i].ToString();
         }
     }
     #endregion
@@ -129,7 +135,18 @@ public class PLAYER : MonoBehaviour
         {
             Death();
         }
+       
+        if (collision.gameObject.CompareTag("Platform"))
+        {
+
+
+            anim.SetTrigger("groundHit");
+
+        }
     }
+
+    // OnCollisionExit2D is called when this collider2D/rigidbody2D has stopped touching another rigidbody2D/collider2D (2D physics only)
+    
     IEnumerator LavaMove(Vector3 newPos)
     {
         Vector3 currentPos = lava.transform.position;
@@ -156,6 +173,7 @@ public class PLAYER : MonoBehaviour
     #region Death and Revive
     void Death()
     {
+        //Get the Highscores
         SaveAndLoad.SaveScore();
         GetHighscores();
         //Set timescale to zero and bring up highscores
@@ -169,7 +187,7 @@ public class PLAYER : MonoBehaviour
         Time.timeScale = 1;
         SceneManager.LoadScene(1);
     }
+   
     #endregion
-    #region Save and Load
-    #endregion
+
 }

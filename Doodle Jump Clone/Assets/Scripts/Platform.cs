@@ -26,6 +26,11 @@ public class Platform : MonoBehaviour
             GetComponent<BoxCollider2D>().enabled = false;
         }
         
+        if(this.transform.position.y < playerEntity.transform.position.y - 20 )
+        {
+            Destroy(transform.parent.gameObject);
+        }
+
     }
 
 
@@ -42,7 +47,7 @@ public class Platform : MonoBehaviour
         if (PLAYER.isJumping && playerScript.platform != this)
         {
             PlatformManager manager = FindObjectOfType<PlatformManager>();
-            manager.MovePlatformsDown();
+         //   manager.MovePlatformsDown();
             playerScript.MoveLava();
         }
         

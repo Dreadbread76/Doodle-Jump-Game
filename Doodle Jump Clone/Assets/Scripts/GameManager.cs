@@ -8,11 +8,12 @@ public class GameManager : MonoBehaviour
     public PlayerData data;
     public Text[] highscores = new Text[7];
 
-    public void GetHighscores()
+   /* public void GetHighscores()
     {
         for (int i = 0; i < highscores.Length; i++)
         {
             highscores[i].text =  data.savedScores[i].ToString();
+           
         }
-    }
+    }*/
 }

@@ -5,26 +5,34 @@ using UnityEngine;
 public class PlatformManager : MonoBehaviour
 {
     public GameObject player;
+    public GameObject lava;
     private List<Platform> platforms = new List<Platform>();
     public GameObject platformObj;
+    private float prevPosStart = 0.8f;
+    private float prevPosGap = 0.8f;
     Vector3 spawnPos;
+    Vector3 prevPos;
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        prevPos.y = spawnPos.y + prevPosStart;
     }
-    public void MovePlatformsDown()
+    
+    public void Update()
     {
-        foreach(Platform platform in platforms)
+        //Spawn a new platform every time prevPos is moved
+        if(player.transform.position.y > prevPos.y)
         {
-            platform.MoveDown(5);
+            NewPlatform();
+            prevPos.y = player.transform.position.y + prevPosGap;
+
         }
     }
-
     public void NewPlatform()
     {
-
-        spawnPos = new Vector3(Random.Range(-7, 7) + player.transform.position.x, 4 + player.transform.position.y, 0);
+        //Set spawn position to a random position 
+        spawnPos = new Vector3(Random.Range(8, -8) + player.transform.position.x, lava.transform.position.y + Random.Range(11,17), 0);
         GameObject newObj = Instantiate(platformObj, spawnPos, Quaternion.identity);
         platforms.Add(newObj.GetComponent<Platform>());
     }
