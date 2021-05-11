@@ -4,44 +4,43 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
-
+#region Variables
     public PLAYER playerScript;
     private GameObject playerEntity;
 
-   
+   #endregion
+   #region Start
     private void Start()
     {
         playerEntity = GameObject.FindGameObjectWithTag("Player");
         playerScript = playerEntity.GetComponent<PLAYER>();
     }
+#endregion
+#region Update
 
-    private void Update()
+private void Update()
+{
+    if(playerEntity.transform.position.y > transform.position.y)
     {
-        if(playerEntity.transform.position.y > transform.position.y)
-        {
-            GetComponent<BoxCollider2D>().enabled = true;
-        }
-        else
-        {
-            GetComponent<BoxCollider2D>().enabled = false;
-        }
+        GetComponent<BoxCollider2D>().enabled = true;
+    }
+    else
+    {
+        GetComponent<BoxCollider2D>().enabled = false;
+    }
         
-        if(this.transform.position.y < playerEntity.transform.position.y - 20 )
-        {
-            Destroy(transform.parent.gameObject);
-        }
-
-    }
-
-
-
-    // Start is called before the first frame update
-    public void MoveDown(float downSpeed)
+    if(this.transform.position.y < playerEntity.transform.position.y - 20 )
     {
-        transform.position -= transform.up * downSpeed;
+        Destroy(transform.parent.gameObject);
     }
 
-    // Update is called once per frame
+}
+
+#endregion
+#region OnCollisionEnter
+   
+
+    // Move the lava up when the colliding with a higher platform
     public void OnCollisionEnter2D(Collision2D collision)
     {
         if (PLAYER.isJumping && playerScript.platform != this)
@@ -52,4 +51,5 @@ public class Platform : MonoBehaviour
         }
         
     }
+    #endregion
 }

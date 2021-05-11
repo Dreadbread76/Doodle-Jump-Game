@@ -37,7 +37,7 @@ public class PLAYER : MonoBehaviour
     #region Start
     void Start()
     {
-
+        //Set all components in the starting position
         rigi = GetComponent<Rigidbody2D>();
         playerTrans = GetComponent<Transform>();
         scoreMenu.SetActive(false);
@@ -51,8 +51,10 @@ public class PLAYER : MonoBehaviour
     void Update()
     {
         #region Boundaries
+        
         position = transform.position;
-
+        
+        // Move the player to the other side of the screen if the player goes off screen
         if(position.x <= -boundary)
         {
             position.x = -teleportPos;
@@ -66,10 +68,13 @@ public class PLAYER : MonoBehaviour
 
         #endregion
         #region Inputs
+        
+        //Move left
         if (Input.GetKey(KeyCode.A))
         {
             rigi.AddForce(playerTrans.right * -speed);
         }
+        //Move right
         if (Input.GetKey(KeyCode.D))
         {
             rigi.AddForce(playerTrans.right * speed);
@@ -137,7 +142,7 @@ public class PLAYER : MonoBehaviour
         {
             Death();
         }
-       
+       //Trigger Squish and Stretch Animation when the the player hits the platform
         if (collision.gameObject.CompareTag("Platform"))
         {
 

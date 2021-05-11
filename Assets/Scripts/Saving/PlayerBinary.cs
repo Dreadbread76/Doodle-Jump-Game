@@ -5,6 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 public static class PlayerBinary
 {
+    #region Save Player
    public static void SavePlayer(PLAYER player)
     {
         //Reference a Binary Formatter
@@ -21,6 +22,8 @@ public static class PlayerBinary
         stream.Close();
         Debug.Log("Saved");
     }
+   #endregion
+   #region Load Player
     public static PlayerData LoadPlayer()
     {
         //Location to Save
@@ -45,4 +48,5 @@ public static class PlayerBinary
             return null;
         }
     }
+    #endregion
 }

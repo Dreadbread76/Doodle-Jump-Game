@@ -5,6 +5,8 @@ using UnityEngine;
 public class SaveAndLoad : MonoBehaviour
 {
     private static PLAYER player;
+    
+    #region Save Score
     public static void SaveScore()
     {
         if (player == null)
@@ -17,6 +19,8 @@ public class SaveAndLoad : MonoBehaviour
             PlayerBinary.SavePlayer(player);
         }
     }
+    #endregion
+    #region Load Score
     public static void LoadScore()
     {
         PlayerData data = PlayerBinary.LoadPlayer();
@@ -37,4 +41,5 @@ public class SaveAndLoad : MonoBehaviour
         
         
     }
+    #endregion
 }

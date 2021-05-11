@@ -6,9 +6,11 @@ using UnityEngine.UI;
 [System.Serializable]
 public class PlayerData
 {
+    #region Variables
     public int newScore;
     public int[] savedScores = new int[7];
-    
+    #endregion
+    #region Player Data
     public PlayerData (PLAYER player)
     {
         newScore = PLAYER.score;
@@ -21,6 +23,10 @@ public class PlayerData
 
         NewScore(PLAYER.score);
     }
+#endregion
+    #region  New Highscore
+
+
 
 
     void NewScore(int newScore)
@@ -41,32 +47,9 @@ public class PlayerData
         }
 
 
-        /*
-        for ( int i = 0; i < savedScores.Length; i++)
-        {
-            if(newScore > savedScores[i])
-            {
-                if (i+1 < savedScores.Length)
-                {
-                    savedScores[i+1] = savedScores[i];
-                }
-
-                savedScores[i] = newScore;
-
-                Debug.Log(newScore);
-            }
-        }*/
-        }
-
-    /*
-    void thismethod()
-    {
-
+   
     }
-
-    void thismethod(int x)
-    {
-
-    }*/
+    #endregion
+  
 
 }
